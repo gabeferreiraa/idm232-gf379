@@ -1,3 +1,17 @@
+<?php 
+require_once './db.php';
+
+$db_table = 'users';
+$stmt = $connections->prepare("INSERT INTO users (id, name, email) VALUES (?, ?, ?)");
+$stmt->bind_param('iss',$id, $name, $email);
+
+$id= '982952525';
+$name = 'john smith';
+$email = 'john@example.com';
+
+$stmt->execute();
+$connections->close();  
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
