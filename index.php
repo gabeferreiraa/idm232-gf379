@@ -2,11 +2,11 @@
 require_once './db.php';
 
 $db_table = 'users';
-$stmt = $connections->prepare("INSERT INTO users (id, name, email) VALUES (?, ?, ?)");
-$stmt->bind_param('iss',$id, $name, $email);
+$stmt = $connections->prepare("INSERT INTO users ( name, email) VALUES ( ?, ?)");
+$stmt->bind_param('ss', $name, $email);
 
-$id= '982952525';
-$name = 'john smith';
+
+$name = 'john doe';
 $email = 'john@example.com';
 
 $stmt->execute();
