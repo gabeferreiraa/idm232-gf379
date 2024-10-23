@@ -1,0 +1,299 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+header,
+footer {
+  background-color: #ff6f61;
+  color: #fff;
+}
+
+header a,
+footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Header Styles */
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 0;
+}
+
+header nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav li {
+  display: inline;
+  margin-left: 1em;
+}
+
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 1em 0;
+}
+
+/* Main Content Styles */
+main {
+  padding: 2em 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header nav li {
+    display: block;
+    margin: 0.5em 0;
+  }
+}
+/* Search Section Styles */
+.search-section {
+  text-align: center;
+}
+
+.search-section h2 {
+  margin-bottom: 1em;
+}
+
+.search-section input {
+  width: 80%;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-section button {
+  padding: 0.5em 1em;
+  background-color: #ff6f61;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-section button:hover {
+  background-color: #e65c54;
+}
+
+@media (max-width: 600px) {
+  .search-section input {
+    width: 100%;
+    margin: 0 0 1em 0;
+  }
+
+  .search-section button {
+    width: 100%;
+  }
+}
+/* Results Section Styles */
+.results-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+}
+
+.recipe-card {
+  border: 1px solid #ccc;
+  padding: 1em;
+  border-radius: 4px;
+}
+
+.recipe-card h3 {
+  margin-top: 0;
+}
+
+.recipe-card a {
+  text-decoration: none;
+  color: #ff6f61;
+}
+
+.recipe-card a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 600px) {
+  .results-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .results-section {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+/* Button Styles */
+.btn {
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: #ff6f61;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 1em;
+}
+
+.btn:hover {
+  background-color: #e65c54;
+}
+/* Recipe Details Styles */
+.recipe-details img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.ingredients,
+.instructions {
+  margin-top: 1.5em;
+}
+
+.ingredients ul,
+.instructions ol {
+  margin-left: 1.5em;
+}
+
+.instructions ol {
+  list-style-type: decimal;
+}
+/* Help Section Styles */
+.help-section h3 {
+  color: #ff6f61;
+}
+
+.help-section p {
+  margin-bottom: 1em;
+}
+/* Cards Section Styles */
+.cards-section {
+  margin-top: 2em;
+}
+
+.cards-section h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+}
+
+.recipe-card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: auto;
+}
+
+.recipe-card h3 {
+  margin: 0.5em 0;
+}
+
+.recipe-card p {
+  padding: 0 1em 1em 1em;
+  color: #666;
+}
+
+.recipe-card a {
+  text-decoration: none;
+  color: #333;
+}
+
+.recipe-card a:hover h3 {
+  color: #ff6f61;
+}
+
+/* Responsive Grid */
+@media (min-width: 600px) {
+  .cards-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .cards-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+/* Recipe Details Styles */
+.recipe-details {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.recipe-details h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.recipe-details img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.recipe-meta {
+  text-align: center;
+  margin: 1em 0;
+}
+
+.recipe-meta p {
+  margin: 0.5em 0;
+}
+
+.ingredients,
+.instructions {
+  margin-top: 2em;
+}
+
+.ingredients h3,
+.instructions h3 {
+  color: #ff6f61;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5em;
+}
+
+.ingredients ul,
+.instructions ol {
+  margin-left: 1.5em;
+  margin-top: 1em;
+}
+
+.ingredients ul li,
+.instructions ol li {
+  margin-bottom: 0.5em;
+}
+
+.instructions ol {
+  list-style-type: decimal;
+}
