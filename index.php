@@ -6,6 +6,13 @@ ini_set('display_startup_errors', 1);
 
 require_once './db.php';
 
+ // Database connection
+$conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +30,7 @@ require_once './db.php';
             <nav>
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="recipe.php">Recipes</a></li>
+                    <!-- <li><a href="recipe.php">Recipes</a></li> -->
                     <li><a href="help.php">Help</a></li>
                 </ul>
             </nav>
@@ -51,20 +58,13 @@ require_once './db.php';
                 </section>
             <?php endif; ?>
 
-            <!-- Recipe Cards Section -->
             <section class="cards-section">
                 <h2><?php echo isset($_GET['search']) ? 'Search Results' : 'Popular Recipes'; ?></h2>
                 <div class="cards-container">
                     <?php
-                    // Database connection
-                    $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+                   
 
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
 
-                    // Check if a search query exists
                     $searchQuery = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
                     if ($searchQuery) {
                         // Fetch recipes matching the search query
@@ -82,16 +82,15 @@ require_once './db.php';
 
                     if ($result && $result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            // Use default image if dish_image is empty or file doesn't exist
                             $imagePath = (!empty($row['dish_image']) && file_exists($row['dish_image'])) 
                                         ? $row['dish_image'] 
-                                        : 'default_image_path.jpg'; // Replace with the path to your default image
+                                        : 'default_image_path.jpg'; 
                             echo '<article class="recipe-card">';
-                            echo '<a href="recipe.php?id=' . $row["id"] . '">'; // Link with recipe ID
+                            echo '<a href="recipe.php?id=' . $row["id"] . '">'; 
                             echo '<img src="' . htmlspecialchars($imagePath) . '" alt="' . htmlspecialchars($row["recipe_name"]) . '">';
-                            echo '<h3>' . htmlspecialchars($row["recipe_name"]) . '</h3>';
+                            echo '<h3>' . utf8_decode($row["recipe_name"]) . '</h3>';
                             echo '</a>';
-                            echo '<p>' . htmlspecialchars($row["cuisine"]) . ' | ' . $row["cook_time"] . ' min | ' . $row["servings"] . ' Servings</p>';
+                            echo '<p>' . utf8_decode($row["cuisine"]) . ' | ' . $row["cook_time"] . ' min | ' . $row["servings"] . ' Servings</p>';
                             echo '</article>';
                         }
                     } else {

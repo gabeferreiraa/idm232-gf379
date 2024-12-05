@@ -1,3 +1,13 @@
+<?php
+// Database connection
+require_once './db.php';
+$conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +24,6 @@
             <nav>
                 <ul class="nav-links">
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="recipe.php">Recipes</a></li>
                     <li><a href="help.php">Help</a></li>
                 </ul>
             </nav>
@@ -23,22 +32,13 @@
 
     <main class="recipe-details container">
         <?php
-        // Database connection
-        require_once './db.php';
 
-        $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
 
         // Get recipe ID from URL
         $recipeId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
         if ($recipeId > 0) {
-            // Fetch recipe details, including the image column
-            $sql = "SELECT recipe_name, cuisine, cook_time, servings, description, ingredients, steps, dish_image, ingredients_image 
+            $sql = "SELECT recipe_name, cuisine, cook_time, servings, description, ingredients, steps, dish_image, ingredients_image, steps_image 
                     FROM recipes WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $recipeId);
@@ -49,7 +49,7 @@
                 $recipe = $result->fetch_assoc();
 
                 // Display recipe details
-                echo '<h1 class="recipe-title">' . htmlspecialchars($recipe['recipe_name']) . '</h1>';
+                echo '<h1 class="recipe-title">' . utf8_encode($recipe['recipe_name']) . '</h1>';
                 echo '<div class="recipe-image">';
                 if (!empty($recipe['dish_image'])) {
                     echo '<img src="' . htmlspecialchars($recipe['dish_image']) . '" alt="' . htmlspecialchars($recipe['recipe_name']) . '" />';
@@ -61,35 +61,40 @@
                 ?>
                 <div class="recipe-meta">
                     <?php 
-                    echo '<p><strong>Cuisine:</strong> ' . htmlspecialchars($recipe['cuisine']) . '</p>';
-                    echo '<p><strong>Cook Time:</strong> ' . htmlspecialchars($recipe['cook_time']) . ' min</p>';
-                    echo '<p><strong>Servings:</strong> ' . htmlspecialchars($recipe['servings']) . '</p>';
+                    echo '<p><strong>Cuisine:</strong> ' . utf8_decode($recipe['cuisine']) . '</p>';
+                    echo '<p><strong>Cook Time:</strong> ' . utf8_decode($recipe['cook_time']) . ' min</p>';
+                    echo '<p><strong>Servings:</strong> ' . utf8_decode($recipe['servings']) . '</p>';
                     ?>
                 </div>
                 <?php 
-                echo '<p class="recipe-description"><strong>Description:</strong> ' . htmlspecialchars($recipe['description']) . '</p>';
+                echo '<p class="recipe-description"><strong>Description:</strong> ' . utf8_decode($recipe['description']) . '</p>';
 
-                // Display ingredients
                 echo '<h2 class="section-title">Ingredients</h2>';
+                echo '<img src="' . htmlspecialchars($recipe['ingredients_image']) . '" alt="' . htmlspecialchars($recipe['recipe_name']) . ' Ingredients" />';
                 $ingredients = explode('*', $recipe['ingredients']); // Split by '*' delimiter
                 echo '<ul class="ingredients-list">';
                 foreach ($ingredients as $ingredient) {
                     if (!empty(trim($ingredient))) {
-                        echo '<li>' . htmlspecialchars(trim($ingredient)) . '</li>';
+                        echo '<li>' . utf8_decode(trim($ingredient)) . '</li>';
                     }
                 }
                 echo '</ul>';
 
-                // Display steps
                 echo '<h2 class="section-title">Steps</h2>';
-                $steps = explode('^^', $recipe['steps']); // Split by '^^' delimiter
-                echo '<ol class="steps-list">';
+                $steps = explode('^^', $recipe['steps']); // Split steps by '^^' delimiter
+                $stepImages = explode(',', $recipe['steps_image']); // Split images by ',' delimiter
+                echo '<div class="steps-container">';
                 foreach ($steps as $index => $step) {
                     if (!empty(trim($step))) {
-                        echo '<li>' . nl2br(htmlspecialchars(trim($step))) . '</li>';
+                        echo '<div class="step">';
+                        echo '<p>' . nl2br(htmlspecialchars(trim($step))) . '</p>';
+                        if (isset($stepImages[$index]) && !empty($stepImages[$index])) {
+                            echo '<img src="' . htmlspecialchars($stepImages[$index]) . '" alt="Step ' . ($index + 1) . '" class="step-image" />';
+                        }
+                        echo '</div>';
                     }
                 }
-                echo '</ol>';
+                echo '</div>';
             } else {
                 echo '<p class="error-message">Recipe not found.</p>';
             }

@@ -1,5 +1,5 @@
-SetEnv DB_SERVER 10.248.95.141
+SetEnv DB_SERVER localhost
 SetEnv DB_USER gf379
-SetEnv DB_PASS 
+SetEnv DB_PASS /mtfO24TCct/Rf3r
 SetEnv DB_NAME gf379_db
 ErrorDocument 404 /no-results.php
