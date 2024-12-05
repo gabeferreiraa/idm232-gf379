@@ -1,128 +1,115 @@
 <?php 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
 require_once './db.php';
 
-$db_table = 'users';
-$stmt = $connections->prepare("INSERT INTO users ( name, email) VALUES ( ?, ?)");
-$stmt->bind_param('ss', $name, $email);
-
-
-$name = 'john doe';
-$email = 'john@example.com';
-
-$stmt->execute();
-$connections->close();  
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/css/normalize.css"> -->
-    <link rel="stylesheet" href="index.css">
-    <title>My PHP Site</title>
+    <link rel="stylesheet" href="./index.css">
+    <title>Fork & Flavor - Home</title>
 </head>
 <body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1><a href="index.php">Fork & Flavor</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="recipe.php">Recipes</a></li>
+                    <li><a href="help.php">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <!-- Navigation -->
-    <nav>
-        <ul>
-            <li><a href="index.php?page=home">Home</a></li>
-            <li><a href="./recipe.php">Recipe</a></li>
-
-        </ul>
-    </nav>
-
+    <!-- Main Content -->
     <main>
-        <?php
-        // Basic routing based on 'page' parameter
-        if (isset($_GET['page'])) {
-            $page = $_GET['page'];
+        <div class="container">
+            <!-- Search Section -->
+            <section class="search-section">
+                <h2>Find Your Favorite Recipes</h2>
+                <form action="index.php" method="GET">
+                    <input type="text" name="search" placeholder="Search recipes..." required>
+                    <button type="submit">Search</button>
+                </form>
+            </section>
 
-            // Switch case to handle different pages
-            switch ($page) {
-                case "home":
-                    echo "<h1>Welcome to the Home Page</h1>";
-                    break;
-                case "page1":
-                    echo "<h1>This is Page 1</h1>";
-                    break;
-                case "page2":
-                    echo "<h1>This is Page 2</h1>";
-                    break;
-                case "page3":
-                    echo "<h1>This is Page 3</h1>";
-                    break;
-                default:
-                    echo "<h1>404 Page Not Found</h1>";
-                    break;
-            }
-        } else {
-            // Default to Home page
-            echo "<h1>Welcome to the Home Page</h1>";
-        }
-        ?>
+            <!-- Back Button -->
+            <?php if (isset($_GET['search'])): ?>
+                <section class="back-button-section">
+                    <form action="index.php" method="GET">
+                        <button type="submit">Back to All Recipes</button>
+                    </form>
+                </section>
+            <?php endif; ?>
 
-        <!-- Calculator Form (kept from your original file) -->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <input type="number" name="num01" placeholder="Enter Number">
-            <Label>Enter a number to be calculated</Label>
-            <select name="operator">
-                <option value="add">+</option>
-                <option value="subtract">-</option>
-                <option value="multiply">*</option>
-                <option value="divide">÷</option>
-            </select>
-            <input type="number" name="num02" placeholder="Enter another number">
-            <button type="submit">Calculate</button>
-        </form>
+            <!-- Recipe Cards Section -->
+            <section class="cards-section">
+                <h2><?php echo isset($_GET['search']) ? 'Search Results' : 'Popular Recipes'; ?></h2>
+                <div class="cards-container">
+                    <?php
+                    // Database connection
+                    $conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
 
-        <?php
-        // Calculator Logic (kept from your original file)
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $num01 = filter_input(INPUT_POST, "num01", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $num02 = filter_input(INPUT_POST, "num02", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $operator = htmlspecialchars($_POST["operator"]);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
-            $errors = false;
+                    // Check if a search query exists
+                    $searchQuery = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+                    if ($searchQuery) {
+                        // Fetch recipes matching the search query
+                        $sql = "SELECT id, recipe_name, cuisine, cook_time, servings, dish_image 
+                                FROM recipes 
+                                WHERE recipe_name LIKE '%$searchQuery%' 
+                                   OR cuisine LIKE '%$searchQuery%' 
+                                   OR description LIKE '%$searchQuery%'";
+                    } else {
+                        // Fetch all recipes for the main page
+                        $sql = "SELECT id, recipe_name, cuisine, cook_time, servings, dish_image FROM recipes";
+                    }
 
-            if (empty($num01) || empty($num02) || empty($operator)) {
-                echo "<p class='calc-error'>Fill in all fields!</p>";
-                $errors = true;
-            }
-            if (!is_numeric($num01) || !is_numeric($num02)) {
-                echo "<p class='calc-error'>ENTER NUMBERS ONLY!</p>";
-                $errors = true;
-            }
+                    $result = $conn->query($sql);
 
-            if (!$errors) {
-                $value = null;
-                switch ($operator) {
-                    case "add":
-                        $value = $num01 + $num02;
-                        break;
-                    case "subtract":
-                        $value = $num01 - $num02;
-                        break;
-                    case "multiply":
-                        $value = $num01 * $num02;
-                        break;
-                    case "divide":
-                        if ($num02 == 0) {
-                            echo "<p class='calc-error'>Cannot divide by zero!</p>";
-                            $errors = true;
-                        } else {
-                            $value = $num01 / $num02;
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            // Use default image if dish_image is empty or file doesn't exist
+                            $imagePath = (!empty($row['dish_image']) && file_exists($row['dish_image'])) 
+                                        ? $row['dish_image'] 
+                                        : 'default_image_path.jpg'; // Replace with the path to your default image
+                            echo '<article class="recipe-card">';
+                            echo '<a href="recipe.php?id=' . $row["id"] . '">'; // Link with recipe ID
+                            echo '<img src="' . htmlspecialchars($imagePath) . '" alt="' . htmlspecialchars($row["recipe_name"]) . '">';
+                            echo '<h3>' . htmlspecialchars($row["recipe_name"]) . '</h3>';
+                            echo '</a>';
+                            echo '<p>' . htmlspecialchars($row["cuisine"]) . ' | ' . $row["cook_time"] . ' min | ' . $row["servings"] . ' Servings</p>';
+                            echo '</article>';
                         }
-                        break;
-                    default:
-                        echo "<p class='calc-error'>Something went wrong!</p>";
-                }
+                    } else {
+                        echo "<p>No recipes found.</p>";
+                    }
 
-                if (!$errors) {
-                    echo "<p class='calc-answer'>Result = " . $value . "</p>";
-                }
-            }
-        }
-        ?>
+                    $conn->close();
+                    ?>
+                </div>
+            </section>
+        </div>
     </main>
-</body
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Fork & Flavor</p>
+        </div>
+    </footer>
+</body>
+</html>
