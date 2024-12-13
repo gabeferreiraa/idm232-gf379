@@ -1,11 +1,7 @@
 <?php
 // Database connection
 require_once './db.php';
-$conn = new mysqli($db_server, $db_user, $db_pass, $db_name);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,18 +12,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <header class="header">
-        <div class="container">
-            <h1><a href="index.php" class="site-title">Fork & Flavor</a></h1>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="help.php">Help</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    
 
     <!-- Main Content -->
     <main class="help-container container">

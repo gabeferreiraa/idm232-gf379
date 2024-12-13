@@ -1,3 +1,28 @@
+/* Root Variables for Easy Maintenance */
+:root {
+  /* Primary Colors */
+  --primary-color: #ff6f61; /* Coral */
+  --secondary-color: #6b5b95; /* Slate Blue */
+  --accent-color: ##2e3d49; /* Sunflower Yellow */
+
+  /* Neutral Colors */
+  --background-color: #f9f9f9;
+  --text-color: #333333;
+  --heading-color: #6b5b95;
+  --subtext-color: #555555;
+  --border-color: #cccccc;
+
+  /* Button Colors */
+  --button-hover-color: #e65c54;
+  --signup-hover-bg: #ff6f61;
+  --signup-hover-text: #ffffff;
+
+  /* Search Section Colors */
+  --search-bg-color: #ffffff;
+  --search-input-bg: #f1f1f1;
+  --search-border-color: #dddddd;
+}
+
 /* Global Styles */
 * {
   box-sizing: border-box;
@@ -6,9 +31,10 @@
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
-  padding: 1rem;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.8; /* Increased line height for better readability */
+  padding: 0;
 }
 
 .container {
@@ -18,20 +44,21 @@ body {
   padding: 1rem;
 }
 
+/* Header and Footer Styles */
 header,
 footer {
-  background-color: #ff6f61;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: #ffffff;
 }
 
 header a,
 footer a {
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
 }
 
-/* Header Styles */
-header .container {
+header .container,
+footer .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -42,147 +69,367 @@ header nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
 }
 
 header nav li {
-  display: inline;
-  margin-left: 1em;
+  margin-left: 1.5em; /* Increased spacing between nav items */
 }
 
 header nav a {
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600; /* Increased font weight for better prominence */
+  transition: color 0.3s ease;
 }
 
 header nav a:hover {
+  color: var(--accent-color); /* Accent color on hover */
   text-decoration: underline;
 }
 
-/* Footer Styles */
 footer {
   text-align: center;
-  padding: 1em 0;
+  padding: 1.5em 0; /* Increased padding for a more spacious footer */
+  background: linear-gradient(
+    135deg,
+    var(--footer-gradient-start),
+    var(--footer-gradient-end)
+  ); /* Updated gradient background */
+  /* Alternative: Use a solid color if preferred */
+  /* background-color: var(--primary-color); */
 }
 
 /* Main Content Styles */
 main {
-  padding: 2em;
-  background-color: #fff;
+  padding: 2.5em 1em; /* Increased padding for more space */
+  background-color: #ffffff;
   margin: 2rem auto;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1000px; /* Adjust as needed */
 }
 
-/* Recipe Details Styles */
-.recipe-details {
-  max-width: 800px;
+/* Typography Enhancements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  margin-bottom: 0.75em; /* Added spacing below headings */
+}
+
+p {
+  margin-bottom: 1.5em; /* Increased spacing between paragraphs */
+  color: var(--text-color);
+  font-size: 1.1rem; /* Slightly larger font size for better readability */
+}
+
+/* Button Styles */
+
+/* Primary Button */
+.btn {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background-color: var(--primary-color); /* Solid primary color */
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 1.5em; /* Increased margin-top for better spacing */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  font-size: 1rem; /* Standardized font size */
+}
+
+.btn:hover {
+  background-color: var(--button-hover-color); /* Darker shade on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Login and Signup Buttons */
+.login-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 2em; /* Increased top margin */
+}
+
+.login,
+.signup {
+  padding: 12px 24px; /* Increased padding for larger buttons */
+  border: none;
+  border-radius: 8px; /* Increased border radius for a softer look */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Login Button */
+.login {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.login:hover {
+  background-color: var(--button-hover-color); /* Darker shade for hover */
+}
+
+/* Signup Button */
+.signup {
+  background-color: #ffffff;
+  color: var(--primary-color); /* Primary color for text */
+  border: 2px solid var(--primary-color); /* Primary color for border */
+}
+
+.signup:hover {
+  background-color: var(--primary-color); /* Invert colors on hover */
+  color: #ffffff;
+}
+
+/* Form Styles */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px; /* Increased max-width for larger forms */
   margin: 0 auto;
 }
 
-.recipe-details h1,
-.recipe-details h2 {
-  text-align: center;
-  color: #ff6f61;
-  margin-bottom: 1em;
+.contact-form label {
+  margin-bottom: 8px; /* Increased margin for better spacing */
+  font-weight: bold;
+  color: var(--heading-color); /* Secondary color for labels */
 }
 
-.recipe-details img {
+.contact-form input[type="text"],
+.contact-form input[type="password"],
+.contact-form input[type="email"],
+.contact-form textarea {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
+  padding: 12px; /* Increased padding for better input fields */
+  margin-bottom: 20px; /* Increased margin between fields */
+  border: 1px solid var(--border-color);
+  border-radius: 6px; /* Increased border radius */
+  background-color: var(--search-input-bg);
+  transition: border-color 0.3s ease;
+  font-size: 1rem; /* Standardized font size */
 }
 
-.recipe-meta {
+.contact-form input[type="text"]:focus,
+.contact-form input[type="password"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.contact-form button {
+  padding: 12px 24px; /* Increased padding */
+  background-color: var(--primary-color); /* Solid primary color */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px; /* Increased border radius */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem; /* Standardized font size */
+}
+
+.contact-form button:hover {
+  background-color: var(--button-hover-color); /* Darker shade on hover */
+  transform: translateY(-2px);
+}
+
+/* Success and Error Messages */
+.success-message {
+  color: green;
+  font-weight: bold;
   text-align: center;
-  margin: 1em 0;
-}
-
-.recipe-meta p {
-  margin: 0.5em 0;
-}
-
-.ingredients,
-.instructions {
-  margin-top: 2em;
-}
-
-.ingredients h3,
-.instructions h3 {
-  color: #ff6f61;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 0.5em;
-}
-
-.ingredients ul,
-.instructions ol {
-  margin-left: 1.5em;
   margin-top: 1em;
 }
 
-.ingredients ul li {
-  margin-bottom: 0.5em;
-}
-
-.instructions ol {
-  list-style-type: decimal;
-}
-
-.instructions ol li {
-  margin-bottom: 1.5em; /* Add more space between steps */
-  line-height: 1.8; /* Make steps easier to read */
-}
-
-.recipe-image {
+.error-message {
+  color: red;
+  font-weight: bold;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-top: 1em;
+}
+
+/* Search Section Styles */
+.search-section {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem; /* Increased margin-bottom */
+  gap: 1.5rem; /* Increased gap between elements */
+  padding: 2.5em; /* Increased padding */
+  background-color: var(--search-bg-color);
+  border-radius: 10px; /* Increased border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-section h2 {
+  margin-bottom: 2em; /* Increased spacing */
+  color: var(--heading-color); /* Secondary color for headings */
+  text-align: center; /* Center the heading */
+}
+
+.search-section .search-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* Increased max-width */
+  display: flex;
+  gap: 15px; /* Increased gap between elements */
+  align-items: center;
+}
+
+.search-section .search-icon {
+  position: absolute;
+  left: 20px; /* Adjusted position for better alignment */
+  width: 24px; /* Increased size for better visibility */
+  height: 24px;
+  pointer-events: none;
+  color: var(--secondary-color);
+}
+
+.search-section input {
+  width: 100%;
+  padding: 0.75em 0.75em 0.75em 3em; /* Adjusted padding for icon */
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid var(--search-border-color);
+  border-radius: 6px; /* Increased border radius */
+  background-color: var(--search-input-bg);
+  transition: border-color 0.3s ease;
+  font-size: 1rem; /* Standardized font size */
+}
+
+.search-section input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.search-section button {
+  padding: 0.75em 2em; /* Increased padding */
+  background-color: var(--primary-color); /* Solid primary color */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px; /* Increased border radius */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem; /* Standardized font size */
+}
+
+.search-section button:hover {
+  background-color: var(--button-hover-color); /* Darker shade on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+}
+
+@media (max-width: 600px) {
+  .search-section {
+    padding: 2em; /* Adjusted padding for smaller screens */
+  }
+
+  .search-section h2 {
+    margin-bottom: 1.5em;
+  }
+
+  .search-section .search-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-section input {
+    padding-left: 2.5em; /* Adjust padding for smaller screens */
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+
+  .search-section button {
+    width: 100%;
+  }
+
+  .search-section .search-icon {
+    left: 15px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .login-signup {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+  }
 }
 
 /* Cards Section Styles */
 .cards-section {
-  margin-top: 2em;
+  margin-top: 3em; /* Increased top margin */
 }
 
 .cards-section h2 {
   text-align: center;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em; /* Increased bottom margin */
+  color: var(--heading-color); /* Secondary color for headings */
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5em; /* Increased gap between cards */
+  padding: 1.5rem; /* Increased padding */
 }
 
 .recipe-card {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px; /* Increased radius for a softer look */
   overflow: hidden;
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem; /* Increased padding */
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .recipe-card img {
   width: 100%;
   height: auto;
+  object-fit: cover; /* Ensures images cover the area without distortion */
+  max-height: 200px; /* Limits the height to prevent oversized images */
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
 }
 
 .recipe-card h3 {
-  margin: 0.5em 0;
+  margin: 1em 0;
+  font-size: 1.4rem; /* Increased font size */
+  color: var(--heading-color); /* Secondary color for titles */
 }
 
 .recipe-card p {
-  padding: 0 1em 1em 1em;
-  color: #666;
+  color: var(--subtext-color);
+  margin-bottom: 1em;
+  font-size: 1rem; /* Standardized font size */
 }
 
 .recipe-card a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-color);
+  transition: color 0.3s ease;
 }
 
 .recipe-card a:hover h3 {
-  color: #ff6f61;
+  color: var(--accent-color); /* Accent color on hover */
 }
 
 /* Responsive Grid */
@@ -198,206 +445,337 @@ main {
   }
 }
 
-/* Button Styles */
-.btn {
-  display: inline-block;
-  padding: 0.5em 1em;
-  background-color: #ff6f61;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  margin-top: 1em;
-}
-
-.btn:hover {
-  background-color: #e65c54;
-}
-
-/* Search Section Styles */
-.search-section {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.search-section h2 {
-  margin-bottom: 1em;
-}
-
-.search-section input {
-  width: 80%;
-  padding: 0.5em;
-  margin-right: 0.5em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.search-section button {
-  padding: 0.5em 1em;
-  background-color: #ff6f61;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.search-section button:hover {
-  background-color: #e65c54;
-}
-
-@media (max-width: 600px) {
-  .search-section input {
-    width: 100%;
-    margin: 0 0 1em 0;
-  }
-
-  .search-section button {
-    width: 100%;
-  }
-}
-
-/* Results Section Styles */
-.results-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-}
-
-@media (min-width: 600px) {
-  .results-section {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 900px) {
-  .results-section {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.recipe-title {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.recipe-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.recipe-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.recipe-description {
-  margin-bottom: 30px;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.ingredients-list,
-.steps-list {
-  margin-left: 20px;
-}
-
-.steps-list {
-  list-style-type: decimal;
-}
-
-.error-message {
-  color: red;
-  font-weight: bold;
-}
+/* Back Button Section */
 .back-button-section {
-  margin: 20px 0;
+  margin: 30px 0; /* Increased margin */
   text-align: center;
 }
 
 .back-button-section button {
-  padding: 10px 20px;
-  background-color: #f04a3f;
-  color: #fff;
+  padding: 12px 24px; /* Increased padding */
+  background-color: #f04a3f; /* Solid color instead of gradient */
+  color: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px; /* Increased border radius */
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .back-button-section button:hover {
-  background-color: #d43e35;
+  background-color: #d43e35; /* Darker shade on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
 }
-/* Basic styling for the help page */
+
+/* Help Page Styles */
 .help-container {
   max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  margin: 4em auto; /* Increased margin for better spacing */
+  padding: 2em; /* Increased padding */
+  background-color: #ffffff;
+  border-radius: 10px; /* Increased border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .help-section {
-  margin-bottom: 30px;
+  margin-bottom: 3em; /* Increased margin between sections */
 }
 
 .help-section h2 {
-  margin-bottom: 10px;
-  color: #333;
+  margin-bottom: 1em;
+  color: var(--heading-color); /* Secondary color for headings */
 }
 
 .help-section p {
+  line-height: 1.8; /* Increased line height */
+  color: var(--subtext-color);
+  font-size: 1.1rem; /* Slightly larger font size */
+}
+
+/* Login and Signup Page Specific Styles */
+.login-signup-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px; /* Increased gap between buttons */
+  margin: 3em 0; /* Increased margin */
+}
+
+@media (max-width: 600px) {
+  .login-signup-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Recipe Details Page Styles */
+.recipe-details {
+  /* Constrain the maximum width for better readability */
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container */
+  padding: 2em; /* Increased padding */
+}
+
+.recipe-details img {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 0 2em 0; /* Increased margin below images */
+  display: block;
+  border-radius: 8px;
+}
+
+.recipe-details .recipe-meta {
+  margin: 2em 0; /* Increased margin */
+  color: var(--heading-color); /* Secondary color for meta information */
+}
+
+.recipe-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recipe-details ul li {
+  margin-bottom: 15px; /* Increased spacing between list items */
+  color: var(--text-color);
+  font-size: 1rem; /* Standardized font size */
+}
+
+.recipe-details .steps-container {
+  margin-top: 2em; /* Increased margin */
+}
+
+.recipe-details .step {
+  margin-bottom: 2em; /* Increased spacing between steps */
+}
+
+.recipe-details .step img {
+  width: 100%;
+  max-width: 350px; /* Increased max-width */
+  display: block;
+  margin: 15px 0; /* Increased margin */
+  border-radius: 6px;
+  border: 2px solid var(--accent-color); /* Accent border */
+}
+
+/* Additional Responsive Design */
+@media (max-width: 900px) {
+  .cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .recipe-details img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Hero Section Styles */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: #ffffff;
+  text-align: center;
+  padding: 3em 1.5em; /* Increased padding */
+  border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+}
+
+.hero h1 {
+  font-size: 3rem; /* Increased font size */
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.4rem; /* Increased font size */
+  color: var(--accent-color);
+}
+
+/* Section Headings */
+h2 {
+  color: var(--heading-color);
+  font-size: 2rem; /* Increased font size */
+  margin-bottom: 1.5rem; /* Increased margin */
+}
+
+/* Overview Section */
+.overview p {
+  font-size: 1.2rem; /* Increased font size */
+  line-height: 1.8; /* Increased line height */
+}
+
+/* Recipe Card Container */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem; /* Increased gap */
+  margin-top: 1.5rem;
+}
+
+.recipe-card img {
+  border-radius: 8px;
+  margin-bottom: 1.5rem; /* Increased margin */
+}
+
+.recipe-card:hover h3 {
+  color: var(--accent-color);
+}
+
+/* Code Snippet Styling */
+pre {
+  background: #f4f4f4;
+  padding: 1.5rem; /* Increased padding */
+  border-radius: 8px; /* Increased border radius */
+  overflow-x: auto;
+  font-size: 1rem; /* Standardized font size */
+  line-height: 1.6; /* Improved line height */
+  margin-bottom: 1.5rem; /* Increased margin below code blocks */
+}
+/* case-study.css */
+
+.case-study {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.case-study section {
+  margin-bottom: 60px;
+}
+
+.case-study .intro h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.case-study .intro p {
+  font-size: 1.1em;
+  color: #555;
   line-height: 1.6;
+}
+
+.case-study .my-role h2,
+.case-study .the-challenge h2,
+.case-study .the-approach h2,
+.case-study .design-execution h2,
+.case-study .leadership-coordination h2,
+.case-study .the-discovery h2,
+.case-study .the-vision h2,
+.case-study .the-execution h2,
+.case-study .validation h2,
+.case-study .the-launch h2,
+.case-study .the-impact h2,
+.case-study .reflections h2,
+.case-study .conclusion h2,
+.case-study .contact h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.case-study h3 {
+  font-size: 1.5em;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.case-study p {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.6;
+}
+
+.case-study ul,
+.case-study ol {
+  margin-left: 20px;
   color: #555;
 }
 
-.contact-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+.case-study li {
+  margin-bottom: 10px;
 }
 
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form textarea {
+.case-study img {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.contact-form button {
-  padding: 10px 20px;
-  background-color: #f04a3f;
+.case-study blockquote {
+  border-left: 5px solid #ccc;
+  padding-left: 15px;
+  color: #666;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+.case-study blockquote footer {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #999;
+}
+
+.case-study a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+.case-study a:hover {
+  text-decoration: underline;
+}
+
+.case-study .cta {
+  background-color: #1e90ff;
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
 }
 
-.contact-form button:hover {
-  background-color: #d43e35;
+.case-study .cta a {
+  color: #fff;
+  text-decoration: underline;
 }
 
-.success-message {
-  color: green;
-  font-weight: bold;
+.case-study .cta a:hover {
+  text-decoration: none;
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .case-study {
+    padding: 10px;
+  }
+
+  .case-study .intro h1 {
+    font-size: 2em;
+  }
+
+  .case-study h2 {
+    font-size: 1.75em;
+  }
+
+  .case-study h3 {
+    font-size: 1.25em;
+  }
+
+  .case-study p,
+  .case-study li {
+    font-size: 0.95em;
+  }
+
+  .case-study img {
+    margin-top: 15px;
+  }
 }
